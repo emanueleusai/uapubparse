@@ -79,27 +79,27 @@ titlesub={
 '$\\sqrt{s} = 13\\,{\\text {TeV}} $':'sqrt(s) = 13 TeV',
 '$Z$':'Z',
 '$\\sqrt {s_{NN}}$=5.02\\,\\,TeV':'sqrt(s_NN) = 5.02 TeV',
-'':'',L1476
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
-'':'',
+'${\\text {Z}}$':'Z',
+'${\\text {p}}{\\text {p}}$':'pp',
+'${\\mathrm{Z}}_{\\mathrm{}}^{\\mathrm{}}$':'',
+'$\\Xi^-_\\mathrm{b} \\pi^+ \\pi^-$':'Xi_b- pi+ pi-',
+'$\\sqrt {s}$=13\\,\\,TeV':'sqrt(s) = 13 TeV',
+'$ \\sqrt{s_{\\mathrm{NN}}} $':'sqrt(s_NN)',
+# '':'',
+# '':'',
+# '':'',
+# '':'',
+# '':'',
+# '':'',
+# '':'',
+# '':'',
+# '':'',
+# '':'',
 }
 
-L799
+# L799
 
-"(TOTEM Collaboration)\textdaggerdbl{}, (CMS Collaboration)\textdagger{}, TOTEM, CMS"
+# "(TOTEM Collaboration)\textdaggerdbl{}, (CMS Collaboration)\textdagger{}, TOTEM, CMS"
 
 for i,entry in enumerate(bib_db.entries):
 
@@ -107,6 +107,11 @@ for i,entry in enumerate(bib_db.entries):
 	for key in entry:
 		if entry[key][0]=='{' and entry[key][-1]=='}':
 			bib_db.entries[i][key]=entry[key][1:-1]
+
+	if 'key1' in entry.keys():
+		if ""
+
+bib_db[1]['url']=""
 
 	#
 
