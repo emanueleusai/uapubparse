@@ -108,13 +108,26 @@ for i,entry in enumerate(bib_db.entries):
 		if entry[key][0]=='{' and entry[key][-1]=='}':
 			bib_db.entries[i][key]=entry[key][1:-1]
 
-	if 'key1' in entry.keys():
-		if ""
+	if 'archivePrefix' in entry.keys():
+		if entry['archivePrefix']=="arXiv":
+			arxivid=entry['eprint']
+			bib_db[i]['url']="https://arxiv.org/pdf/"+arxivid+".pdf"
+			# https://arxiv.org/pdf/2102.13080.pdf
 
-bib_db[1]['url']=""
+	if "collaboration" in entry.keys():
+		if 'CMS' in entry['collaboration']:
+			bib_db[i]['author']="Collaboration, CMS and Gleyzer, Sergei and Rumerio, Paolo and Usai, Emanuele"
+			# author = "Collaboration, CMS and Usai, Emanuele and Gleyzer, Sergei",
 
-	#
+	if "doi" in entry.keys():
+		doi='https://doi.org/'+entry['doi']
+		bib_db[i]['doi']=doi
 
+	
+
+
+# https://doi.org/10.1103/PhysRevLett.126.252003
+# "10.1103/PhysRevD.104.052001",
 	
 
 with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
