@@ -1,4 +1,5 @@
-import argparse,bibtexparser,urllib,json
+import argparse,bibtexparser,json
+from urllib.request import urlopen
 # from urllib.request import urlopen
   
 # import json
@@ -19,35 +20,62 @@ args = parser.parse_args()
 
 
 inspire_ids=[]
-arxiv_ids=[]
+doi_ids=[]
+pub_dates=[]
 
 with open(args.filename+'.html') as f:
 	lines = f.readlines()
 	for line in lines:
 		if 'inspirehep.net/literature' in line:
-			inspire_id=line.split['/'][-1][:-2]
+			inspire_id=line.split('/')[-1][:-3]
 			inspire_ids.append(inspire_id)
-		if 'arxiv.org/abs' in line:
-			arxiv_id=line.split['/'][-1][:-2]
-			arxiv_ids.append(arxiv_id)
-if len(inspire_ids)!=len(arxiv_ids):
-	print('inspire ids and arxiv ids do not match')
+		# if 'doi.org' in line: #####long term would be nice to match on doi
+		# 	doi_id=line.split('/')[-2]+'/'+line.split('/')[-1]
+		# 	doi_ids.append(doi_id)
+# 
+# print(len(inspire_ids))
+# print(len(doi_ids))
 
-for iid in inspire_ids:
+not_published=[]
+for i,iid in enumerate(inspire_ids):
 	url='https://inspirehep.net/api/literature/'+iid
-	response = urllib.request.urlopen(url)
+	print(url)
+	response = urlopen(url)
 	data_json = json.loads(response.read())
-	data_json['metadata']['imprints'][0]["date"]
+	if 'imprints' in data_json['metadata'].keys():
+		date=data_json['metadata']['imprints'][0]["date"]
+		pub_dates.append(date.split('-'))
+	else:
+		not_published.append(i)
+		pub_dates.append('not published')
+
+		# print("notin ",url)
 
 
+print(pub_dates)
+
+month_dict={
+	'01':'jan',
+	'02':'feb',
+	'03':'mar',
+	'04':'apr',
+	'05':'may',
+	'06':'jun',
+	'07':'jul',
+	'08':'aug',
+	'09':'sep',
+	'10':'oct',
+	'11':'nov',
+	'12':'dec',
+}
 
 bibparser = bibtexparser.bparser.BibTexParser()
 bibparser.ignore_nonstandard_types = False
 
 with open(args.filename+'.bib') as bibtex_input_file:
-    bib_db = bibtexparser.load(bibtex_input_file,bibparser)
+	bib_db = bibtexparser.load(bibtex_input_file,bibparser)
 
-# print(bib_db.entries)
+	# print(bib_db.entries)
 
 #title substitutions database
 	titlesub={
@@ -131,6 +159,10 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 # "(TOTEM Collaboration)\textdaggerdbl{}, (CMS Collaboration)\textdagger{}, TOTEM, CMS"
 
+	to_remove=[]
+	not_cms=[]
+	accepted_year=[]
+
 	for i,entry in enumerate(bib_db.entries):
 
 		#remove double curly braces
@@ -138,22 +170,65 @@ with open(args.filename+'.bib') as bibtex_input_file:
 			if entry[key][0]=='{' and entry[key][-1]=='}':
 				bib_db.entries[i][key]=entry[key][1:-1]
 
-		if 'archivePrefix' in entry.keys():
-			if entry['archivePrefix']=="arXiv":
+		if 'author' in entry.keys():
+			bib_db.entries[i]['author']=bib_db.entries[i]['author'].replace("\\'",'',100)
+
+		for tsub in titlesub:
+			bib_db.entries[i]['title']=bib_db.entries[i]['title'].replace(tsub,titlesub[tsub],100)
+
+		if 'archiveprefix' in entry.keys():
+			if entry['archiveprefix']=="arXiv":
 				arxivid=entry['eprint']
-				bib_db[i]['url']="https://arxiv.org/pdf/"+arxivid+".pdf"
+				bib_db.entries[i]['url']="https://arxiv.org/pdf/"+arxivid+".pdf"
 				# https://arxiv.org/pdf/2102.13080.pdf
 
-		if "collaboration" in entry.keys():
+
+		if 'collaboration' in entry.keys():
 			if 'CMS' in entry['collaboration']:
-				bib_db[i]['author']="Collaboration, CMS and Gleyzer, Sergei and Rumerio, Paolo and Usai, Emanuele"
+				if "Tracker" in entry['collaboration']:
+					not_cms.append(i)
+				else:	
+					bib_db.entries[i]['author']="Collaboration, CMS and Gleyzer, Sergei and Rumerio, Paolo and Usai, Emanuele"
 				# author = "Collaboration, CMS and Usai, Emanuele and Gleyzer, Sergei",
+			else:
+				not_cms.append(i)
+		else:
+			not_cms.append(i)
 
 		if "doi" in entry.keys():
 			doi='https://doi.org/'+entry['doi']
-			bib_db[i]['doi']=doi
+			bib_db.entries[i]['doi']=doi
 
-	
+		if bib_db.entries[i]['year']!='2022':
+			accepted_year.append(i)
+
+		if i not in not_published:
+			bib_db.entries[i]['year']=pub_dates[i][0]
+			bib_db.entries[i]['month']=month_dict[pub_dates[i][1]]
+			bib_db.entries[i]['day']=pub_dates[i][2]
+		else:
+			bib_db.entries[i]['year']='2022'
+			bib_db.entries[i]['month']='nov'
+			bib_db.entries[i]['day']='01'
+
+
+		if pub_dates[i][0]!='2022':
+			to_remove.append(i) 
+
+	full_removal_list=list(set(not_published)|set(not_cms)|set(to_remove))
+	if args.filename=='accepted':
+		full_removal_list=list(set(not_cms)|set(accepted_year))
+	full_removal_list.sort(reverse=True)
+	print(full_removal_list)
+
+	# for i in not_cms:
+	# 	not_cms_db.append(bib_db.entries[i])
+
+	for i in full_removal_list:
+		del bib_db.entries[i]
+
+	# print(not_cms_db)
+	print(bib_db.entries)
 
 
 # https://doi.org/10.1103/PhysRevLett.126.252003

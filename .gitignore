@@ -130,5 +130,4 @@ dmypy.json
 
 
 uapubparse-env
-*.bib
 .DS_Store
