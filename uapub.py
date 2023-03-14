@@ -22,6 +22,7 @@ args = parser.parse_args()
 inspire_ids=[]
 doi_ids=[]
 pub_dates=[]
+journals=[]
 
 with open(args.filename+'.html') as f:
 	lines = f.readlines()
@@ -36,6 +37,16 @@ with open(args.filename+'.html') as f:
 # print(len(inspire_ids))
 # print(len(doi_ids))
 
+journal_dict={
+	'the European Physical Journal C':'Eur. Phys. J. C',
+	'the Journal of High Energy Physics':'JHEP',
+	'Physics Letters B':'Phys. Lett. B',
+	'the Journal of Instrumentation':'JINST',
+	'Physical Review D':'Phys. Rev. D',
+	'Phys Rev. Letters':'Phys. Rev. Lett.',
+	'Physical Review Letters':'Phys. Rev. Lett.',
+}
+
 not_published=[]
 for i,iid in enumerate(inspire_ids):
 	url='https://inspirehep.net/api/literature/'+iid
@@ -48,6 +59,21 @@ for i,iid in enumerate(inspire_ids):
 	else:
 		not_published.append(i)
 		pub_dates.append('not published')
+
+	if args.filename=='accepted':
+		if 'public_notes' in data_json['metadata'].keys():
+			journal_notes=data_json['metadata']['public_notes'][0]["value"]
+			journal_raw=journal_notes.split('Submitted to ')[1].split('. All figures')[0]
+
+			journals.append(journal_dict[journal_raw])
+		else:
+			if iid=="2088291":
+				journals.append('JHEP')
+			else:
+				journals.append(url)
+# print(journals)
+# assert false
+
 
 		# print("notin ",url)
 
@@ -214,6 +240,10 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 		if pub_dates[i][0]!='2022':
 			to_remove.append(i) 
+
+		if args.filename=='accepted':
+			bib_db.entries[i]['journal']=journals[i] 
+
 
 	full_removal_list=list(set(not_published)|set(not_cms)|set(to_remove))
 	if args.filename=='accepted':
