@@ -214,7 +214,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 				if "Tracker" in entry['collaboration']:
 					not_cms.append(i)
 				else:	
-					bib_db.entries[i]['author']="Collaboration, CMS and Gleyzer, Sergei and Rumerio, Paolo and Usai, Emanuele"
+					bib_db.entries[i]['author']="CMS Collaboration, and Gleyzer, Sergei and Rumerio, Paolo and Usai, Emanuele"
 				# author = "Collaboration, CMS and Usai, Emanuele and Gleyzer, Sergei",
 			else:
 				not_cms.append(i)
