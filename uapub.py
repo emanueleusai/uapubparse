@@ -230,8 +230,12 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 		if i not in not_published:
 			bib_db.entries[i]['year']=pub_dates[i][0]
-			bib_db.entries[i]['month']=month_dict[pub_dates[i][1]]
-			bib_db.entries[i]['day']=pub_dates[i][2]
+			if len(pub_dates[i])>1:
+				bib_db.entries[i]['month']=month_dict[pub_dates[i][1]]
+				bib_db.entries[i]['day']=pub_dates[i][2]
+			else:
+				bib_db.entries[i]['month']='unk'
+				bib_db.entries[i]['day']='unk'
 		else:
 			bib_db.entries[i]['year']='2022'
 			bib_db.entries[i]['month']='nov'
@@ -245,9 +249,21 @@ with open(args.filename+'.bib') as bibtex_input_file:
 			bib_db.entries[i]['journal']=journals[i] 
 
 
-	full_removal_list=list(set(not_published)|set(not_cms)|set(to_remove))
+	# full_removal_list=list(set(not_published)|set(not_cms)|set(to_remove))
+	# if args.filename=='accepted':
+	# 	full_removal_list=list(set(not_cms)|set(accepted_year))
+
+	full_list=set(range(len(bib_db.entries)))
+	full_removal_list=set(not_published)|set(not_cms)|set(to_remove)
 	if args.filename=='accepted':
-		full_removal_list=list(set(not_cms)|set(accepted_year))
+		full_removal_list=set(not_cms)|set(accepted_year)
+	full_removal_list=full_list - full_removal_list
+	# if args.filename=='accepted':
+	# 	full_removal_list=full_removal_list | set(accepted_year)
+	# else:
+	# 	full_removal_list=full_removal_list | set(to_remove)
+	full_removal_list=list(full_removal_list)
+
 	full_removal_list.sort(reverse=True)
 	print(full_removal_list)
 
@@ -265,5 +281,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 # "10.1103/PhysRevD.104.052001",
 	
 
-	with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
+	# with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
+	# 	bibtexparser.dump(bib_db, bibtex_output_file)
+	with open(args.filename.replace('.bib','')+'_others2.bib', 'w') as bibtex_output_file:
 		bibtexparser.dump(bib_db, bibtex_output_file)
