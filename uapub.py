@@ -213,6 +213,10 @@ with open(args.filename+'.bib') as bibtex_input_file:
 			if 'CMS' in entry['collaboration']:
 				if "Tracker" in entry['collaboration']:
 					not_cms.append(i)
+				elif "ECAL" in entry['collaboration']:
+					not_cms.append(i)
+				elif "HCAL" in entry['collaboration']:
+					not_cms.append(i)
 				else:	
 					bib_db.entries[i]['author']="CMS Collaboration, and Gleyzer, Sergei and Rumerio, Paolo and Usai, Emanuele"
 				# author = "Collaboration, CMS and Usai, Emanuele and Gleyzer, Sergei",
@@ -225,7 +229,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 			doi='https://doi.org/'+entry['doi']
 			bib_db.entries[i]['doi']=doi
 
-		if bib_db.entries[i]['year']!='2022':
+		if bib_db.entries[i]['year']!='2022' and bib_db.entries[i]['year']!='2023':
 			accepted_year.append(i)
 
 		if i not in not_published:
@@ -242,7 +246,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 			bib_db.entries[i]['day']='01'
 
 
-		if pub_dates[i][0]!='2022':
+		if pub_dates[i][0]!='2022' and pub_dates[i][0]!='2023':
 			to_remove.append(i) 
 
 		if args.filename=='accepted':
@@ -283,5 +287,5 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 	# with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
 	# 	bibtexparser.dump(bib_db, bibtex_output_file)
-	with open(args.filename.replace('.bib','')+'_others2.bib', 'w') as bibtex_output_file:
+	with open(args.filename.replace('.bib','')+'_rtp23.bib', 'w') as bibtex_output_file:
 		bibtexparser.dump(bib_db, bibtex_output_file)
