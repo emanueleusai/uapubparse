@@ -175,6 +175,22 @@ with open(args.filename+'.bib') as bibtex_input_file:
 '$\\mu\\tau$':'mutau',
 '$\\mathcal{A}\\mathcal{A}$':' AA ',
 'W$^+W^-$':'WW',
+"$'$":"' ",
+'$\\eta$':'eta',
+"${\\sqrt{s}=13\\, \\text {TeV}}$":"sqrt(s) = 13 TeV",
+"$ \\textrm{t}\\overline{\\textrm{t}} $":"ttbar ",
+"$\\tau $":"tau ",
+"$\\sqrt{s}=13$":"sqrt(s) = 13",
+"$\\hbox {t}\\overline{\\hbox {t}}$":"",
+"$^0_\\mathrm{S}$to$\\mu^+\\mu^-$":"0_S to mu+ mu-",
+"$^0$to$\\mu^+\\mu^-$":"0 to mu+ mu-",
+"$ \\sqrt{s_{\\textrm{NN}}} $":"sqrt(s_NN)",
+"$\\text {pp}$":"pp",
+"$\\sqrt{s}=13\\,\\textrm{TeV}$":"sqrt(s) = 13 TeV",
+"$\\sqrt{s}=13\\,\\text {Te\\hspace{-.08em}V} $":"sqrt(s) = 13 TeV",
+"$\\sqrt{s} = 13\\,\\text {Te}\\hspace{-.08em}\\text {V} $":"sqrt(s) = 13 TeV",
+"$ \\textrm{t}\\overline{\\textrm{t}} $":"ttbar",
+"J/\\ensuremath{\\psi}":"J/psi",
 # '':'',
 # '':'',
 # '':'',
@@ -234,7 +250,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 		if i not in not_published:
 			bib_db.entries[i]['year']=pub_dates[i][0]
-			if len(pub_dates[i])>1:
+			if len(pub_dates[i])>2:
 				bib_db.entries[i]['month']=month_dict[pub_dates[i][1]]
 				bib_db.entries[i]['day']=pub_dates[i][2]
 			else:
@@ -246,8 +262,18 @@ with open(args.filename+'.bib') as bibtex_input_file:
 			bib_db.entries[i]['day']='01'
 
 
-		if pub_dates[i][0]!='2022' and pub_dates[i][0]!='2023':
+		# if pub_dates[i][0]!='2022' and pub_dates[i][0]!='2023':
+		# 	to_remove.append(i) 
+
+		if pub_dates[i][0]!='2023':
 			to_remove.append(i) 
+
+
+		#################################
+		#################################
+		#################################
+		#SELECT ONLY ENTRIES AFTER SEPTEMBER
+		
 
 		if args.filename=='accepted':
 			bib_db.entries[i]['journal']=journals[i] 
@@ -256,12 +282,18 @@ with open(args.filename+'.bib') as bibtex_input_file:
 	# full_removal_list=list(set(not_published)|set(not_cms)|set(to_remove))
 	# if args.filename=='accepted':
 	# 	full_removal_list=list(set(not_cms)|set(accepted_year))
+	# print(set(not_published))
+	# print(set(not_cms))
+	# print(set(to_remove))
 
 	full_list=set(range(len(bib_db.entries)))
 	full_removal_list=set(not_published)|set(not_cms)|set(to_remove)
 	if args.filename=='accepted':
 		full_removal_list=set(not_cms)|set(accepted_year)
-	full_removal_list=full_list - full_removal_list
+	# to save the removed ones only uncomment this
+	if 'removed' in args.filename:
+		full_removal_list=full_list - full_removal_list
+
 	# if args.filename=='accepted':
 	# 	full_removal_list=full_removal_list | set(accepted_year)
 	# else:

@@ -1,0 +1,41 @@
+354c354
+<  day = {04},
+---
+>  day = {10},
+358c358
+<  month = {apr},
+---
+>  month = {jun},
+465c465
+<  collaboration = {CMS},
+---
+>  collaboration = {CMS, (CMS Collaboration)*},
+479,498d478
+< }
+< 
+< @article{CMS:2021qsn,
+<  archiveprefix = {arXiv},
+<  author = {CMS Collaboration, and Gleyzer, Sergei and Rumerio, Paolo and Usai, Emanuele},
+<  collaboration = {CMS},
+<  day = {19},
+<  doi = {https://doi.org/10.1038/s41567-022-01838-y},
+<  eprint = {2111.05370},
+<  journal = {Nature Phys.},
+<  month = {jan},
+<  note = {[Erratum: Nature Phys. 19, (2023)]},
+<  number = {3},
+<  pages = {338--350},
+<  primaryclass = {hep-ex},
+<  reportnumber = {CMS-BPH-21-004, CERN-EP-2021-215},
+<  title = {Observation of triple J/\ensuremath{\psi} meson production in proton-proton collisions},
+<  url = {https://arxiv.org/pdf/2111.05370.pdf},
+<  volume = {19},
+<  year = {2023}
+721c701
+< @article{TOTEM:2021zxa,
+---
+> @article{TOTEMCollaboration:2021xam,
+724c704
+<  collaboration = {TOTEM, CMS},
+---
+>  collaboration = {(TOTEM Collaboration)\textdaggerdbl{}, (CMS Collaboration)\textdagger{}, TOTEM, CMS},
