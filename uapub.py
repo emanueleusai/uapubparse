@@ -191,6 +191,10 @@ with open(args.filename+'.bib') as bibtex_input_file:
 "$\\sqrt{s} = 13\\,\\text {Te}\\hspace{-.08em}\\text {V} $":"sqrt(s) = 13 TeV",
 "$ \\textrm{t}\\overline{\\textrm{t}} $":"ttbar",
 "J/\\ensuremath{\\psi}":"J/psi",
+"$\\gamma\\gamma\\to WW$ and $\\gamma\\gamma\\to ZZ$":"gamma gamma to WW and gamma gamma to ZZ",
+"$H \\to \\mathcal{A}\\mathcal{A} \\to  4\\gamma$":"H to AA to 4 gamma",
+"$f_\\mathrm{s} / f_\\mathrm{u}$ and $f_\\mathrm{d} / f_ \\mathrm{u}$":"f_s / f_u and f_d / f_s",
+"$\\sqrt{s}=13\\,\\text {Te}\\hspace{-.08em}\\text {V} $":"sqrt(s) = 13 TeV",
 # '':'',
 # '':'',
 # '':'',
@@ -265,7 +269,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 		# if pub_dates[i][0]!='2022' and pub_dates[i][0]!='2023':
 		# 	to_remove.append(i) 
 
-		if pub_dates[i][0]!='2023':
+		if pub_dates[i][0]!='2023' and pub_dates[i][0]!='2022':
 			to_remove.append(i) 
 
 
@@ -273,7 +277,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 		#################################
 		#################################
 		#SELECT ONLY ENTRIES AFTER SEPTEMBER
-		
+
 
 		if args.filename=='accepted':
 			bib_db.entries[i]['journal']=journals[i] 
@@ -319,5 +323,5 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 	# with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
 	# 	bibtexparser.dump(bib_db, bibtex_output_file)
-	with open(args.filename.replace('.bib','')+'_rtp23.bib', 'w') as bibtex_output_file:
+	with open(args.filename.replace('.bib','')+'_far24.bib', 'w') as bibtex_output_file:
 		bibtexparser.dump(bib_db, bibtex_output_file)
