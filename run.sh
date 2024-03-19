@@ -1,7 +1,7 @@
-python uapub.py far24_2020
-python uapub.py far24_2021
+# python uapub.py far24_2020
+# python uapub.py far24_2021
 python uapub.py far24_2022
-python uapub.py far24_2023
+# python uapub.py far24_2023
 
 # python uapub.py 2020all
 # python uapub.py 2021all

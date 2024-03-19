@@ -195,6 +195,8 @@ with open(args.filename+'.bib') as bibtex_input_file:
 "$H \\to \\mathcal{A}\\mathcal{A} \\to  4\\gamma$":"H to AA to 4 gamma",
 "$f_\\mathrm{s} / f_\\mathrm{u}$ and $f_\\mathrm{d} / f_ \\mathrm{u}$":"f_s / f_u and f_d / f_s",
 "$\\sqrt{s}=13\\,\\text {Te}\\hspace{-.08em}\\text {V} $":"sqrt(s) = 13 TeV",
+ sNN=8.16\,\,TeV -->sqrt
+ lepton~+~jets
 # '':'',
 # '':'',
 # '':'',
@@ -269,14 +271,18 @@ with open(args.filename+'.bib') as bibtex_input_file:
 		# if pub_dates[i][0]!='2022' and pub_dates[i][0]!='2023':
 		# 	to_remove.append(i) 
 
-		if pub_dates[i][0]!='2023' and pub_dates[i][0]!='2022':
-			to_remove.append(i) 
+		# if pub_dates[i][0]!='2023':
+		# 	to_remove.append(i) 
 
 
 		#################################
 		#################################
 		#################################
 		#SELECT ONLY ENTRIES AFTER SEPTEMBER
+		if pub_dates[i][0]!='2023':
+			to_remove.append(i) 
+		elif bib_db.entries[i]['month'] not in ['oct','nov','dec']:
+			to_remove.append(i) 
 
 
 		if args.filename=='accepted':
