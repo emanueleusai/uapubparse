@@ -195,8 +195,48 @@ with open(args.filename+'.bib') as bibtex_input_file:
 "$H \\to \\mathcal{A}\\mathcal{A} \\to  4\\gamma$":"H to AA to 4 gamma",
 "$f_\\mathrm{s} / f_\\mathrm{u}$ and $f_\\mathrm{d} / f_ \\mathrm{u}$":"f_s / f_u and f_d / f_s",
 "$\\sqrt{s}=13\\,\\text {Te}\\hspace{-.08em}\\text {V} $":"sqrt(s) = 13 TeV",
- sNN=8.16\,\,TeV -->sqrt
- lepton~+~jets
+"sNN=8.16\\,\\,TeV":"sqrt(sNN) = 8.16 TeV",
+"lepton~+~jets":"lepton+jets",
+sNN=5.02TeV
+$\sqrt{s} = 13\,\hbox {TeV}$
+\ensuremath{\tau}
+W$^{+}W^{−}$
+\Upsilon{}(1S)
+sNN = 8.16 TeV
+sqrt(s)~=~13~TeV
+$ {\Lambda}_{\textrm{c}}^{+} $
+\ensuremath{\tau} \textrightarrow{} 3\ensuremath{\mu}
+\ensuremath{\Lambda}(\ensuremath{\Lambda}‾)
+ sNN=5.02TeV 
+ s=13 TeV 
+ \Upsilon{}(3S)
+ \Upsilon{}
+ $ \sqrt{\textrm{s}} $
+ \ensuremath{\tau}
+ J/psiJ/psi
+ \ensuremath{\tau}
+ H\textrightarrow{}bb\textasciimacron{}
+ $ \textrm{t}\overline{\textrm{t}}\textrm{b}\overline{\textrm{b}} $
+  sNN=5.02 TeV
+  s=7 no tev
+  8~TeV just the tilda)
+$\sqrt{s} = 13~\text {TeV}$
+\ensuremath{\tau}
+\ensuremath{\alpha}S(mZ)
+$ \sqrt{\textrm{s}} $
+\ensuremath{\sqrt{}}$_{s}$
+$\gamma\gamma\to\tau\tau$
+\ensuremath{\Xi}b-\textrightarrow{}\ensuremath{\psi}(2S)\ensuremath{\Xi}-
+\ensuremath{\Xi}b(5945)0
+$ \textrm{b}\overline{\textrm{b}}{\textrm{W}}^{+}{\textrm{W}}^{-} $
+B$^{\pm}$to K$^{\pm}\mu^+\mu^-$
+B$^{\pm}$to K$^{\pm}$e$^+$e$^-$
+${\text {Z}{}{}} {\text {Z}{}{}} $
+${\text {Z}{}{}} {\text {H}{}{}} $
+${\text {b}{}{}} {\bar{{\text {b}{}{}}}{}{}} {\text {b}{}{}} {\bar{{\text {b}{}{}}}{}{}} $
+$\mu\mu$bb
+J/psi\textrightarrow{}\ensuremath{\mu}+\ensuremath{\mu}-\ensuremath{\mu}+\ensuremath{\mu}-
+$ \sqrt{\textrm{s}} $
 # '':'',
 # '':'',
 # '':'',
@@ -279,9 +319,12 @@ with open(args.filename+'.bib') as bibtex_input_file:
 		#################################
 		#################################
 		#SELECT ONLY ENTRIES AFTER SEPTEMBER
-		if pub_dates[i][0]!='2023':
-			to_remove.append(i) 
-		elif bib_db.entries[i]['month'] not in ['oct','nov','dec']:
+		# if pub_dates[i][0]!='2023':
+		# 	to_remove.append(i) 
+		# elif bib_db.entries[i]['month'] not in ['oct','nov','dec']:
+		# 	to_remove.append(i) 
+		#SELECT ONLY ENTRIES AFTER DEC
+		if pub_dates[i][0]!='2024':
 			to_remove.append(i) 
 
 
@@ -297,7 +340,9 @@ with open(args.filename+'.bib') as bibtex_input_file:
 	# print(set(to_remove))
 
 	full_list=set(range(len(bib_db.entries)))
-	full_removal_list=set(not_published)|set(not_cms)|set(to_remove)
+	# full_removal_list=set(not_published)|set(not_cms)|set(to_remove) ##do you want noncms?
+	full_removal_list=set(not_published)|set(to_remove)
+
 	if args.filename=='accepted':
 		full_removal_list=set(not_cms)|set(accepted_year)
 	# to save the removed ones only uncomment this
@@ -329,5 +374,5 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 	# with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
 	# 	bibtexparser.dump(bib_db, bibtex_output_file)
-	with open(args.filename.replace('.bib','')+'_far24.bib', 'w') as bibtex_output_file:
+	with open(args.filename.replace('.bib','')+'_rtp24.bib', 'w') as bibtex_output_file:
 		bibtexparser.dump(bib_db, bibtex_output_file)
