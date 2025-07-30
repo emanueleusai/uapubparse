@@ -60,17 +60,17 @@ for i,iid in enumerate(inspire_ids):
 		not_published.append(i)
 		pub_dates.append('not published')
 
-	if args.filename=='accepted':
-		if 'public_notes' in data_json['metadata'].keys():
-			journal_notes=data_json['metadata']['public_notes'][0]["value"]
-			journal_raw=journal_notes.split('Submitted to ')[1].split('. All figures')[0]
+	# if args.filename=='accepted':
+	# 	if 'public_notes' in data_json['metadata'].keys():
+	# 		journal_notes=data_json['metadata']['public_notes'][0]["value"]
+	# 		journal_raw=journal_notes.split('Submitted to ')[1].split('. All figures')[0]
 
-			journals.append(journal_dict[journal_raw])
-		else:
-			if iid=="2088291":
-				journals.append('JHEP')
-			else:
-				journals.append(url)
+	# 		journals.append(journal_dict[journal_raw])
+	# 	else:
+	# 		if iid=="2088291":
+	# 			journals.append('JHEP')
+	# 		else:
+	# 			journals.append(url)
 # print(journals)
 # assert false
 
@@ -249,6 +249,35 @@ with open(args.filename+'.bib') as bibtex_input_file:
 'tautaubb':'tau tau b b',
 '$\\Lambda_\\text{b}^0\\to J/\\psi\\Xi^-K^+$':'Lambda0_b to J/psi Xi- K+',
 'sNN=5.02~TeV':'sqrt(sNN) = 5.02 TeV',
+{\textendash}
+at s=13{\,}{\,}TeV
+$\sqrt{{s}_{\text{NN}}}$
+$\sqrt{{s}_{\text{NN}}}$
+B0{\textrightarrow}K{\textasteriskcentered}(892)0{\ensuremath{\mu}}+{\ensuremath{\mu}}{\ensuremath{-}}
+s=13{\,}{\,}TeV
+s=13{\,}{\,}TeV
+$ \textrm{t}\overline{\textrm{t}}\textrm{H} $
+{\textrightarrow}$ \textrm{b}\overline{\textrm{b}} $
+pb$^{−1}$
+J/{\ensuremath{\psi}}
+{\ensuremath{\psi}}(2S)
+{\textrightarrow}$ \textrm{b}\overline{\textrm{b}} $
+sNN=8.16{\,}{\,}TeV
+{\textendash}
+$ \textrm{b}\overline{\textrm{b}}\textrm{b}\overline{\textrm{b}} $
+at s=13{\,}{\,}TeV
+{\ensuremath{\rho}}0, {\ensuremath{\phi}},
+K{\textasteriskcentered}0
+at sNN=8.16TeV
+B$^{+}$ and $ {\textrm{B}}_{\textrm{s}}^0 $
+at s=13{\,}{\,}TeV
+$\sqrt{\text{s}}$
+{tau}{tau}{\ensuremath{\gamma}} 
+high-{\ensuremath{\beta}}*
+{\textendash}
+$\sqrt{s} = 13.6~\textrm{TeV}$
+{\textasciimacron} --> notihng
+at sNN=5.36TeV
 # '':'',
 # '':'',
 # '':'',
@@ -261,7 +290,7 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 	to_remove=[]
 	not_cms=[]
-	accepted_year=[]
+	# accepted_year=[]
 
 	for i,entry in enumerate(bib_db.entries):
 
@@ -303,8 +332,8 @@ with open(args.filename+'.bib') as bibtex_input_file:
 			doi='https://doi.org/'+entry['doi']
 			bib_db.entries[i]['doi']=doi
 
-		if bib_db.entries[i]['year']!='2022' and bib_db.entries[i]['year']!='2023':
-			accepted_year.append(i)
+		# if bib_db.entries[i]['year']!='2022' and bib_db.entries[i]['year']!='2023':
+		# 	accepted_year.append(i)
 
 		if i not in not_published:
 			bib_db.entries[i]['year']=pub_dates[i][0]
@@ -331,17 +360,17 @@ with open(args.filename+'.bib') as bibtex_input_file:
 		#################################
 		#################################
 		#SELECT ONLY ENTRIES AFTER SEPTEMBER
-		if pub_dates[i][0]!='2024':
-			to_remove.append(i) 
-		elif bib_db.entries[i]['month'] not in ['oct','nov','dec']:
-			to_remove.append(i) 
-		#SELECT ONLY ENTRIES AFTER DEC
 		# if pub_dates[i][0]!='2024':
 		# 	to_remove.append(i) 
+		# elif bib_db.entries[i]['month'] not in ['oct','nov','dec']:
+		# 	to_remove.append(i) 
+		#SELECT ONLY ENTRIES AFTER DEC
+		if pub_dates[i][0]!='2025':
+			to_remove.append(i) 
 
 
-		if args.filename=='accepted':
-			bib_db.entries[i]['journal']=journals[i] 
+		# if args.filename=='accepted':
+		# 	bib_db.entries[i]['journal']=journals[i] 
 
 
 	# full_removal_list=list(set(not_published)|set(not_cms)|set(to_remove))
@@ -355,11 +384,11 @@ with open(args.filename+'.bib') as bibtex_input_file:
 	# full_removal_list=set(not_published)|set(not_cms)|set(to_remove) ##do you want noncms?
 	full_removal_list=set(not_published)|set(to_remove)
 
-	if args.filename=='accepted':
-		full_removal_list=set(not_cms)|set(accepted_year)
-	# to save the removed ones only uncomment this
-	if 'removed' in args.filename:
-		full_removal_list=full_list - full_removal_list
+	# if args.filename=='accepted':
+	# 	full_removal_list=set(not_cms)|set(accepted_year)
+	# # to save the removed ones only uncomment this
+	# if 'removed' in args.filename:
+	# 	full_removal_list=full_list - full_removal_list
 
 	# if args.filename=='accepted':
 	# 	full_removal_list=full_removal_list | set(accepted_year)
@@ -386,5 +415,5 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 	# with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
 	# 	bibtexparser.dump(bib_db, bibtex_output_file)
-	with open(args.filename.replace('.bib','')+'_far25.bib', 'w') as bibtex_output_file:
+	with open(args.filename.replace('.bib','')+'_bma25.bib', 'w') as bibtex_output_file:
 		bibtexparser.dump(bib_db, bibtex_output_file)
