@@ -5,9 +5,11 @@
 # python uapub.py rtp24/rtp24_2024
 # python uapub.py far24_2023
 
-python uapub.py bma/bma_2023
-python uapub.py bma/bma_2024
-python uapub.py bma/bma_2025
+# python uapub.py bma/bma_2023
+# python uapub.py bma/bma_2024
+# python uapub.py bma/bma_2025
+
+python uapub.py rtp25/rtp25
 
 # python uapub.py 2020all
 # python uapub.py 2021all

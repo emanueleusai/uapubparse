@@ -249,35 +249,47 @@ with open(args.filename+'.bib') as bibtex_input_file:
 'tautaubb':'tau tau b b',
 '$\\Lambda_\\text{b}^0\\to J/\\psi\\Xi^-K^+$':'Lambda0_b to J/psi Xi- K+',
 'sNN=5.02~TeV':'sqrt(sNN) = 5.02 TeV',
-{\textendash}
-at s=13{\,}{\,}TeV
-$\sqrt{{s}_{\text{NN}}}$
-$\sqrt{{s}_{\text{NN}}}$
-B0{\textrightarrow}K{\textasteriskcentered}(892)0{\ensuremath{\mu}}+{\ensuremath{\mu}}{\ensuremath{-}}
-s=13{\,}{\,}TeV
-s=13{\,}{\,}TeV
-$ \textrm{t}\overline{\textrm{t}}\textrm{H} $
-{\textrightarrow}$ \textrm{b}\overline{\textrm{b}} $
-pb$^{−1}$
-J/{\ensuremath{\psi}}
-{\ensuremath{\psi}}(2S)
-{\textrightarrow}$ \textrm{b}\overline{\textrm{b}} $
-sNN=8.16{\,}{\,}TeV
-{\textendash}
-$ \textrm{b}\overline{\textrm{b}}\textrm{b}\overline{\textrm{b}} $
-at s=13{\,}{\,}TeV
-{\ensuremath{\rho}}0, {\ensuremath{\phi}},
-K{\textasteriskcentered}0
-at sNN=8.16TeV
-B$^{+}$ and $ {\textrm{B}}_{\textrm{s}}^0 $
-at s=13{\,}{\,}TeV
-$\sqrt{\text{s}}$
-{tau}{tau}{\ensuremath{\gamma}} 
-high-{\ensuremath{\beta}}*
-{\textendash}
-$\sqrt{s} = 13.6~\textrm{TeV}$
-{\textasciimacron} --> notihng
-at sNN=5.36TeV
+'{\\textendash}':'-',
+'at s=13{\\,}{\\,}TeV':'at sqrt(s)=13 TeV',
+'$\\sqrt{{s}_{\\text{NN}}}$':'sqrt(s_NN)',
+# '$\\sqrt{{s}_{\\text{NN}}}$':'sqrt(s_NN)',
+'B0{\\textrightarrow}K{\\textasteriskcentered}(892)0{\\ensuremath{\\mu}}+{\\ensuremath{\\mu}}{\\ensuremath{-}}':'B0 to K*(892)0 mu+ mu-',
+# 's=13{\\,}{\\,}TeV':'sqrt(s)=13 TeV',
+'s=13{\\,}{\\,}TeV':'sqrt(s)=13 TeV',
+'$ \\textrm{t}\\overline{\\textrm{t}}\\textrm{H} $':'ttH',
+'{\\textrightarrow}$ \\textrm{b}\\overline{\\textrm{b}} $':'to bbar',
+'pb$^{−1}$':'/pb',
+'J/{\\ensuremath{\\psi}}':'J/psi',
+'{\\ensuremath{\\psi}}(2S)':'psi(2S)',
+# '{\\textrightarrow}$ \\textrm{b}\\overline{\\textrm{b}} $':'to bbar',
+'sNN=8.16{\\,}{\\,}TeV':'sqrt(s_NN)=8.16 TeV',
+# '{\\textendash}':'-',
+'$ \\textrm{b}\\overline{\\textrm{b}}\\textrm{b}\\overline{\\textrm{b}} $':'bbbb',
+# 'at s=13{\\,}{\\,}TeV':'at sqrt(s)=13 TeV',
+'{\\ensuremath{\\rho}}0, {\\ensuremath{\\phi}},':'rho0, phi',
+'K{\\textasteriskcentered}0':'K*0',
+'at sNN=8.16TeV':'at sqrt(s_NN)=8.16 TeV',
+'B$^{+}$ and $ {\\textrm{B}}_{\\textrm{s}}^0 $':'B+ and B_s0',
+'at s=13{\\,}{\\,}TeV':'at sqrt(s)=13 TeV',
+'$\\sqrt{\\text{s}}$':'sqrt(s)',
+'{tau}{tau}{\\ensuremath{\\gamma}} ':'tau tau gamma',
+'high-{\\ensuremath{\\beta}}*':'high-beta*',
+# '{\\textendash}':'-',
+'$\\sqrt{s} = 13.6~\\textrm{TeV}$':'sqrt(s)=13.6 TeV',
+'{\\textasciimacron}':'',
+'at sNN=5.36TeV':'at sqrt(s_NN)=5.36 TeV',
+'$_0$':'_0',
+'$B^0\\to K^*(892)^0\\mu^+\\mu^-$':'B^0 to K*(892)0 mu+ mu-',
+'$\\mathcal{B}(W \\to cq)/\\mathcal{B}(W \\to\\mathrm{q\\bar{q}\'})$':'B(W to cq)/B(W to qqbar)', 
+'$\\sqrt{\\text{s}}=13.6$':'sqrt(s)=13.6',
+'{\\textrightarrow} {\\ensuremath{\\gamma}}{\\ensuremath{\\gamma}}':'to gamma gamma',
+'$\\sqrt{{\\varvec{s}}}=13$':'sqrt(s)=13',
+'{\\ensuremath{\\Lambda}}':'Lambda',
+'{\\ensuremath{\\sigma}}psi(2S)/{\\ensuremath{\\sigma}}':'sigma psi(2S) / sigma',
+# 'at s=13 and 13.6~TeV':'',
+# '8.16~TeV':'',
+'at s=13 and':'at sqrt(s)=13 and',
+'~':'',
 # '':'',
 # '':'',
 # '':'',
@@ -415,5 +427,5 @@ at sNN=5.36TeV
 
 	# with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
 	# 	bibtexparser.dump(bib_db, bibtex_output_file)
-	with open(args.filename.replace('.bib','')+'_bma25.bib', 'w') as bibtex_output_file:
+	with open(args.filename.replace('.bib','')+'_rtp25.bib', 'w') as bibtex_output_file:
 		bibtexparser.dump(bib_db, bibtex_output_file)
