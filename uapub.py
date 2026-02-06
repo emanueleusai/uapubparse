@@ -372,13 +372,15 @@ with open(args.filename+'.bib') as bibtex_input_file:
 		#################################
 		#################################
 		#SELECT ONLY ENTRIES AFTER SEPTEMBER
-		# if pub_dates[i][0]!='2024':
-		# 	to_remove.append(i) 
-		# elif bib_db.entries[i]['month'] not in ['oct','nov','dec']:
-		# 	to_remove.append(i) 
-		#SELECT ONLY ENTRIES AFTER DEC
 		if pub_dates[i][0]!='2025':
 			to_remove.append(i) 
+		elif bib_db.entries[i]['month'] not in ['sep','oct','nov','dec']:
+			to_remove.append(i) 
+		elif bib_db.entries[i]['month']=='sep' and bib_db.entries[i]['day'] not in ['30','29','28','27','26','25','24']:
+			to_remove.append(i)
+		#SELECT ONLY ENTRIES AFTER DEC
+		# if pub_dates[i][0]!='2025':
+		# 	to_remove.append(i) 
 
 
 		# if args.filename=='accepted':
@@ -427,5 +429,5 @@ with open(args.filename+'.bib') as bibtex_input_file:
 
 	# with open(args.filename.replace('.bib','')+'_parsed.bib', 'w') as bibtex_output_file:
 	# 	bibtexparser.dump(bib_db, bibtex_output_file)
-	with open(args.filename.replace('.bib','')+'_rtp25.bib', 'w') as bibtex_output_file:
+	with open(args.filename.replace('.bib','')+'_far26.bib', 'w') as bibtex_output_file:
 		bibtexparser.dump(bib_db, bibtex_output_file)
